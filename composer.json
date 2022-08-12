@@ -1,0 +1,23 @@
+{
+    "name": "merkushin/php-easyest",
+    "description": "PHP: The Easy Test",
+	"version": "0.0.1",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-4": {
+            "PhpEasyest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dmitry Merkushin",
+            "email": "merkushin@gmail.com"
+        }
+    ],
+	"bin": [
+		"bin/php-easyest",
+		"bin/php-easyest.php"
+	],
+    "require": {}
+}
