@@ -18,6 +18,9 @@ Tests exmple:
 
 namespace \TestNamespace\Example1;
 
+use PhpEasyest\Attribute\Fixture;
+use PhpEasyest\Attribute\Test;
+
 #[Fixture]
 function num(): int {
     return 1;
@@ -30,5 +33,5 @@ function test_is_one(int $num): void {
 
 ```
 
-You can use `#[Setup]` and `#[TearDown]` attributes to define correspoding functions.
+You can use `#[Setup]`, `#[TearDown]` and `#[Ignore]` attributes to define correspoding functions or ignore ones.
 
