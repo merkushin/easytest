@@ -19,5 +19,7 @@
 		"bin/php-easyest",
 		"bin/php-easyest.php"
 	],
-    "require": {}
+    "require": {
+		"php": ">=8.0.0"
+	}
 }
