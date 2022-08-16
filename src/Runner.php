@@ -51,54 +51,17 @@ class Runner {
 	}
 
 	public function runTests(array $definedFunctions): void {
+		$testSuite = new TestSuite($definedFunctions);
+		$testSuite->prepare();
 
-		$fixtures = [];
-		$tests = [];
-		$setup = [];
-		$teardown = [];
-
-
-		foreach ($definedFunctions as $function) {
-			$reflection = new \ReflectionFunction($function);
-
-			$ignore = $reflection->getAttributes(Ignore::class);
-			if (count($ignore) > 0) {
-				continue;
-			}
-
-			$arguments = [];
-			foreach ($reflection->getParameters() as $parameter) {
-				$paramNamespace = $reflection->getNamespaceName() ? $reflection->getNamespaceName() . '\\' : '';
-				$arguments[$paramNamespace . $parameter->getName()] = $parameter->getType()->getName();
-			}
-
-
-			foreach ($reflection->getAttributes() as $attr) {
-				$name = $attr->getName();
-				if ($name === Fixture::class) {
-					$fixtures[$reflection->getName()] = $reflection->getReturnType()->getName();
-				} elseif ($name === Test::class) {
-					$tests[] = [
-						'function' => $reflection->getName(),
-						'arguments' => $arguments,
-					];
-				} elseif ($name === Setup::class) {
-					$setup[] = $reflection->getName();
-				} elseif ($name === TearDown::class) {
-					$teardown[] = $reflection->getName();
-				}
-			}
-
-		}
-
-		foreach ($tests as $test) {
+		foreach ($testSuite->getTests() as $test) {
 			$function = $test['function'];
 			$arguments = $test['arguments'];
 
 			$prepared_arguments = [];
 			foreach ($arguments as $name => $type) {
 				try {
-					if (isset($fixtures[$name]) && $fixtures[$name] === $type) {
+					if ($testSuite->hasFixture($name, $type)) {
 						$prepared_arguments[] = $name();
 					} else {
 						$this->errors[] = new \RuntimeException("Didn't find fixture for $name");
@@ -111,11 +74,11 @@ class Runner {
 			}
 
 			try {
-				foreach ($setup as $setupFunction) {
+				foreach ($testSuite->getSetups() as $setupFunction) {
 					$setupFunction();
 				}
 				$function(...$prepared_arguments);
-				foreach ($teardown as $teardownFunction) {
+				foreach ($testSuite->getTearDowns() as $teardownFunction) {
 					$teardownFunction();
 				}
 				$this->passes++;
