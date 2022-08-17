@@ -27,27 +27,10 @@ class Runner {
 			$this->runTests($definedFunctions);
 		}
 
-		if (count($this->failures) === 0 && count($this->errors) === 0) {
-			echo "\nAll tests passed.\n";
-			return;
-		} 
+		echo "\n";
 
-		echo "\nSome tests failed.\n";
-
-		if (count($this->failures)) {
-			echo "Failed tests:\n";
-			foreach ($this->failures as  $i => $fail) {
-				echo " - [" . ($i + 1) . "] " . $fail->getMessage() . "\n";
-				echo $fail->getTraceAsString() . "\n\n";
-			}
-		}
-		if (count($this->errors)) {
-			echo "Errors:\n";
-			foreach ($this->errors as  $i => $error) {
-				echo " - [" . ($i + 1) . "] " . $error->getMessage() . "\n";
-				echo $error->getTraceAsString() . "\n\n";
-			}
-		}
+		$resultFormatter = new ResultFormatter();
+		echo $resultFormatter->format($this->passes, $this->failures, $this->errors);
 	}
 
 	private function runTests(array $definedFunctions): void {
