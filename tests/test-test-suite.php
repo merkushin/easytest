@@ -8,7 +8,7 @@ use PhpEasyest\Attribute\Test;
 use PhpEasyest\TestSuite;
 
 #[Test]
-function testTestSuite_getTests_WhenPrepareCalled_ReturnsMatchingArray(TestSuite $testSuite): void
+function testTestSuite_GetTests_WhenPrepareCalled_ReturnsMatchingArray(TestSuite $testSuite): void
 {
 	$testSuite->prepare();
 
@@ -26,7 +26,7 @@ function testTestSuite_getTests_WhenPrepareCalled_ReturnsMatchingArray(TestSuite
 }
 
 #[Test]
-function testTestSuite_getFixture_WhenNameAndTypeProvided_ReturnsMatchingFunctionName(TestSuite $testSuite): void
+function testTestSuite_GetFixture_WhenNameAndTypeProvided_ReturnsMatchingFunctionName(TestSuite $testSuite): void
 {
 	$testSuite->prepare();
 

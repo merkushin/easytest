@@ -50,46 +50,17 @@ class Runner {
 		}
 	}
 
-	public function runTests(array $definedFunctions): void {
+	private function runTests(array $definedFunctions): void {
 		$testSuite = new TestSuite($definedFunctions);
 		$testSuite->prepare();
 
-		foreach ($testSuite->getTests() as $test) {
-			$function = $test['function'];
-			$arguments = $test['arguments'];
-
-			$prepared_arguments = [];
-			foreach ($arguments as $name => $type) {
-				try {
-					if ($testSuite->hasFixture($name, $type)) {
-						$prepared_arguments[] = $name();
-					} else {
-						$this->errors[] = new \RuntimeException("Didn't find fixture for $name");
-						continue 2;
-					}
-				} catch (\Throwable $e) {
-					$this->errors[] = new \RuntimeException("Fixture for $name failed: " . $e->getMessage());
-					continue 2;
-				}
-			}
-
-			try {
-				foreach ($testSuite->getSetups() as $setupFunction) {
-					$setupFunction();
-				}
-				$function(...$prepared_arguments);
-				foreach ($testSuite->getTearDowns() as $teardownFunction) {
-					$teardownFunction();
-				}
-				$this->passes++;
-				echo '.';
-			} catch (\AssertionError $e) {
-				$this->failures[] = $e;
-				echo 'F';
-			} catch (\Throwable $e) {
-				$this->errors[] = $e;
-				echo 'E';
-			}
+		$testSuiteRunner = new TestSuiteRunner($testSuite);
+		foreach ($testSuiteRunner->run() as $testResult) {
+			echo $testResult;
 		}
+
+		$this->passes += $testSuiteRunner->getPasses();
+		$this->failures = array_merge($this->failures, $testSuiteRunner->getFailures());
+		$this->errors = array_merge($this->errors, $testSuiteRunner->getErrors());
 	}
 }
