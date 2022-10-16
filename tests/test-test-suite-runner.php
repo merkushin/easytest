@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace PhpEasyestTest\TestSuiteRunner;
+namespace EasyTestTest\TestSuiteRunner;
 
-use PhpEasyest\Attribute\Fixture;
-use PhpEasyest\Attribute\Ignore;
-use PhpEasyest\Attribute\Setup;
-use PhpEasyest\Attribute\TearDown;
-use PhpEasyest\Attribute\Test;
-use PhpEasyest\TestSuite;
-use PhpEasyest\TestSuiteRunner;
+use EasyTest\Attribute\Fixture;
+use EasyTest\Attribute\Ignore;
+use EasyTest\Attribute\Setup;
+use EasyTest\Attribute\TearDown;
+use EasyTest\Attribute\Test;
+use EasyTest\TestSuite;
+use EasyTest\TestSuiteRunner;
 
 #[Fixture]
 function runner(): TestSuiteRunner
 {
-	$testSuite = new TestSuite(['PhpEasyestTest\\TestSuiteRunner\\test_one', 'PhpEasyestTest\\TestSuiteRunner\\test_one']);
+	$testSuite = new TestSuite(['EasyTestTest\\TestSuiteRunner\\test_one', 'EasyTestTest\\TestSuiteRunner\\test_one']);
 	$testSuite->prepare();
 
 	return new TestSuiteRunner($testSuite);

@@ -1,15 +1,17 @@
 <?php declare(strict_types=1);
 
-use PhpEasyest\Attribute\Test;
-use PhpEasyest\Attribute\Fixture;
+namespace EasyTestTest\Runner;
+
+use EasyTest\Attribute\Test;
+use EasyTest\Attribute\Fixture;
 
 #[Fixture]
-function runner(): \PhpEasyest\Runner {
-	return new \PhpEasyest\Runner();
+function runner(): \EasyTest\Runner {
+	return new \EasyTest\Runner();
 }
 
 #[Test]
-function test_runner(\PhpEasyest\Runner $runner): void
+function test_runner(\EasyTest\Runner $runner): void
 {
-	assert($runner instanceof \PhpEasyest\Runner);
+	assert($runner instanceof \EasyTest\Runner);
 }

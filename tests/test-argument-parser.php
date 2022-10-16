@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace PhpEasyestTest\ArgumentParser;
+namespace EasyTestTest\ArgumentParser;
 
-use PhpEasyest\Attribute\Fixture;
-use PhpEasyest\Attribute\Ignore;
-use PhpEasyest\Attribute\Setup;
-use PhpEasyest\Attribute\TearDown;
-use PhpEasyest\Attribute\Test;
-use PhpEasyest\ArgumentParser;
+use EasyTest\Attribute\Fixture;
+use EasyTest\Attribute\Ignore;
+use EasyTest\Attribute\Setup;
+use EasyTest\Attribute\TearDown;
+use EasyTest\Attribute\Test;
+use EasyTest\ArgumentParser;
 
 #[Fixture]
 function parser(): ArgumentParser

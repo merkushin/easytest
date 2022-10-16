@@ -1,12 +1,12 @@
 {
-    "name": "merkushin/php-easyest",
+    "name": "merkushin/easytest",
     "description": "PHP: The Easy Test",
 	"version": "0.0.1",
     "type": "project",
     "license": "BSD-3-Clause",
     "autoload": {
         "psr-4": {
-            "PhpEasyest\\": "src/"
+            "EasyTest\\": "src/"
         }
     },
     "authors": [
@@ -16,8 +16,8 @@
         }
     ],
 	"bin": [
-		"bin/php-easyest",
-		"bin/php-easyest.php"
+		"bin/easytest",
+		"bin/easytest.php"
 	],
     "require": {
 		"php": ">=8.0.0"

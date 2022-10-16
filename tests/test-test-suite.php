@@ -1,11 +1,11 @@
 <?php 
 
-namespace PhpEasyestTest\TestSuite;
+namespace EasyTestTest\TestSuite;
 
-use PhpEasyest\Attribute\Fixture;
-use PhpEasyest\Attribute\Ignore;
-use PhpEasyest\Attribute\Test;
-use PhpEasyest\TestSuite;
+use EasyTest\Attribute\Fixture;
+use EasyTest\Attribute\Ignore;
+use EasyTest\Attribute\Test;
+use EasyTest\TestSuite;
 
 #[Test]
 function testTestSuite_GetTests_WhenPrepareCalled_ReturnsMatchingArray(TestSuite $testSuite): void
@@ -16,9 +16,9 @@ function testTestSuite_GetTests_WhenPrepareCalled_ReturnsMatchingArray(TestSuite
 
 	$expected = [
 		[
-			'function' => 'PhpEasyestTest\\TestSuite\\exampleTest',
+			'function' => 'EasyTestTest\\TestSuite\\exampleTest',
 			'arguments' => [
-				'PhpEasyestTest\\TestSuite\\exampleFixture' => 'int',
+				'EasyTestTest\\TestSuite\\exampleFixture' => 'int',
 			],
 		],
 	];
@@ -30,7 +30,7 @@ function testTestSuite_GetFixture_WhenNameAndTypeProvided_ReturnsMatchingFunctio
 {
 	$testSuite->prepare();
 
-	$actual = $testSuite->hasFixture('PhpEasyestTest\\TestSuite\\exampleFixture', 'int');
+	$actual = $testSuite->hasFixture('EasyTestTest\\TestSuite\\exampleFixture', 'int');
 
 	assert($actual);
 }
@@ -39,8 +39,8 @@ function testTestSuite_GetFixture_WhenNameAndTypeProvided_ReturnsMatchingFunctio
 function testSuite(): TestSuite
 {
 	return new TestSuite([
-		'\\PhpEasyestTest\\TestSuite\\exampleTest', 
-		'\\PhpEasyestTest\\TestSuite\\exampleFixture',
+		'\\EasyTestTest\\TestSuite\\exampleTest', 
+		'\\EasyTestTest\\TestSuite\\exampleFixture',
 	]);
 }
 

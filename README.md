@@ -9,7 +9,7 @@ Current implementation is extremely naive and allows writing test using function
 Run tests in `./tests` directory with `./vendor/autoload.php` bootstrap script:
 
 ```sh
-./vendor/bin/php-easyest ./tests ./vendor/autoload.php
+./vendor/bin/easytest ./tests ./vendor/autoload.php
 ```
 
 Tests exmple:
@@ -18,8 +18,8 @@ Tests exmple:
 
 namespace \TestNamespace\Example1;
 
-use PhpEasyest\Attribute\Fixture;
-use PhpEasyest\Attribute\Test;
+use EasyTest\Attribute\Fixture;
+use EasyTest\Attribute\Test;
 
 #[Fixture]
 function num(): int {

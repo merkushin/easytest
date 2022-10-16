@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PhpEasyest;
+namespace EasyTest;
 
-use PhpEasyest\Attribute\Fixture;
-use PhpEasyest\Attribute\Ignore;
-use PhpEasyest\Attribute\Setup;
-use PhpEasyest\Attribute\TearDown;
-use PhpEasyest\Attribute\Test;
+use EasyTest\Attribute\Fixture;
+use EasyTest\Attribute\Ignore;
+use EasyTest\Attribute\Setup;
+use EasyTest\Attribute\TearDown;
+use EasyTest\Attribute\Test;
 
 
 class TestSuite {

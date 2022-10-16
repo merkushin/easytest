@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpEasyestTest\FileCollector;
+namespace EasyTestTest\FileFinder;
 
-use PhpEasyest\Attribute\Test;
-use PhpEasyest\Attribute\Fixture;
-use PhpEasyest\FileFinder;
+use EasyTest\Attribute\Test;
+use EasyTest\Attribute\Fixture;
+use EasyTest\FileFinder;
 
 #[Fixture]
 function fileFinder(): FileFinder {

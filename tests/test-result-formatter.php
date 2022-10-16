@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PhpEasyestTest\ResultFormatter;
+namespace EasyTestTest\ResultFormatter;
 
-use PhpEasyest\Attribute\Fixture;
-use PhpEasyest\Attribute\Test;
-use PhpEasyest\ResultFormatter;
+use EasyTest\Attribute\Fixture;
+use EasyTest\Attribute\Test;
+use EasyTest\ResultFormatter;
 
 #[Test]
 function testResultFormatter_Format_WhenNoFailuresAndErrors_ReturnsMatchingString(): void
