@@ -4,7 +4,6 @@ namespace EasyTest;
 
 class FileFinder {
 	public function findIn(string $path) {
-		$files = [];
 		$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
 		foreach ($iterator as $file) {
 			if (!$file->isFile() || $file->getExtension() !== 'php') {
