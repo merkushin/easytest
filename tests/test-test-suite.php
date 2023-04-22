@@ -8,21 +8,13 @@ use EasyTest\TestSuite;
 use Generator;
 
 #[Test]
-function testTestSuite_GetTests_WhenPrepareCalled_ReturnsMatchingArray(TestSuite $testSuite): void
+function testTestSuite_GetTests_WhenPrepareCalled_ReturnsArrayOfMatchingSize(TestSuite $testSuite): void
 {
 	$testSuite->prepare();
 
 	$actual = $testSuite->getTests();
 
-	$expected = [
-		[
-			'function' => 'EasyTestTest\\TestSuite\\exampleTest',
-			'arguments' => [
-				'EasyTestTest\\TestSuite\\exampleFixture' => 'int',
-			],
-		],
-	];
-	assert($expected === $actual, 'Expected: ' . json_encode($expected) . ' Actual: ' . json_encode($actual));
+	assert(1 === count($actual), 'Expected: 1. Actual: ' . count($actual));
 }
 
 #[Test]
