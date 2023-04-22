@@ -22,6 +22,7 @@ function testFileFinder(FileFinder $fileFinder): void
 
 	$generator = $fileFinder->findIn($dirname);
 	$actual = iterator_to_array($generator);
+	sort($actual);
 
 	assert($actual === $expected);
 }

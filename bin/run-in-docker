@@ -1,3 +1,8 @@
 #!/bin/sh
 
-docker run --rm  -v$(pwd):/app -w /app php:8.0-cli php bin/easytest
+if [[ "$(docker inspect --type=image php-parallel 2> /dev/null)" == "[]" ]]; then
+	ABS_PATH=$(realpath "${BASH_SOURCE:-$0}")
+	DIR_PATH=$(dirname $ABS_PATH)
+	docker build -t php-parallel "${DIR_PATH}/."
+fi
+docker run --rm  -v$(pwd):/app -w /app php-parallel php bin/easytest
