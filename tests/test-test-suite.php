@@ -3,9 +3,9 @@
 namespace EasyTestTest\TestSuite;
 
 use EasyTest\Attribute\Fixture;
-use EasyTest\Attribute\Ignore;
 use EasyTest\Attribute\Test;
 use EasyTest\TestSuite;
+use Generator;
 
 #[Test]
 function testTestSuite_GetTests_WhenPrepareCalled_ReturnsMatchingArray(TestSuite $testSuite): void
@@ -36,9 +36,9 @@ function testTestSuite_GetFixture_WhenNameAndTypeProvided_ReturnsMatchingFunctio
 }
 
 #[Fixture]
-function testSuite(): TestSuite
+function testSuite(): Generator
 {
-	return new TestSuite([
+	yield new TestSuite([
 		'\\EasyTestTest\\TestSuite\\exampleTest', 
 		'\\EasyTestTest\\TestSuite\\exampleFixture',
 	]);

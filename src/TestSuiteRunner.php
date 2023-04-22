@@ -2,6 +2,8 @@
 
 namespace EasyTest;
 
+use Generator;
+
 class TestSuiteRunner {
 
 	private TestSuite $testSuite;
@@ -41,12 +43,10 @@ class TestSuiteRunner {
 			}
 
 			try {
-				foreach ($this->testSuite->getSetups() as $setupFunction) {
-					$setupFunction();
-				}
-				$function(...$prepared_arguments);
-				foreach ($this->testSuite->getTearDowns() as $teardownFunction) {
-					$teardownFunction();
+				if ($this->hasGenerators($prepared_arguments)) {
+					$this->runGenerator($function, $prepared_arguments);
+				} else {
+					$this->runFunction($function, $prepared_arguments);
 				}
 				$this->passes++;
 				yield '.';
@@ -57,6 +57,46 @@ class TestSuiteRunner {
 				$this->errors[] = $e;
 				yield 'E';
 			}
+		}
+	}
+
+	private function hasGenerators($arguments): bool {
+		foreach ($arguments as $argument) {
+			if ($argument instanceof Generator) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private function runGenerator($function, $arguments) {
+		$generatorInArgumens = $this->findGenerator($arguments);
+		$generator = $arguments[$generatorInArgumens];
+		if (!$generator instanceof Generator) {
+			throw new \RuntimeException("Test function $function did not return a generator");
+		}
+		foreach ($generator as $value) {
+			$arguments[$generatorInArgumens] = $value;
+			$this->runFunction($function, $arguments);
+		}
+	}
+
+	private function findGenerator($arguments): ?int {
+		foreach ($arguments as $key => $argument) {
+			if ($argument instanceof Generator) {
+				return $key;
+			}
+		}
+		return null;
+	}
+
+	private function runFunction($function, $arguments) {
+		foreach ($this->testSuite->getSetups() as $setupFunction) {
+			$setupFunction();
+		}
+		$function(...$arguments);
+		foreach ($this->testSuite->getTearDowns() as $teardownFunction) {
+			$teardownFunction();
 		}
 	}
 

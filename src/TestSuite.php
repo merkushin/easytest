@@ -7,7 +7,7 @@ use EasyTest\Attribute\Ignore;
 use EasyTest\Attribute\Setup;
 use EasyTest\Attribute\TearDown;
 use EasyTest\Attribute\Test;
-
+use Generator;
 
 class TestSuite {
 
@@ -68,7 +68,11 @@ class TestSuite {
 	}
 
 	public function hasFixture(string $fixtureName, string $fixtureType): bool {
-		return isset($this->fixtures[$fixtureName]) && $this->fixtures[$fixtureName] === $fixtureType;
+		if (!isset($this->fixtures[$fixtureName])) {
+			return false;
+		}
+
+		return $this->fixtures[$fixtureName] === $fixtureType || $this->fixtures[$fixtureName] === Generator::class;
 	}
 
 	public function getSetups(): array {
