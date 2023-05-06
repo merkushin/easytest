@@ -10,30 +10,30 @@ use Generator;
 #[Test]
 function testTestSuite_GetTests_WhenPrepareCalled_ReturnsArrayOfMatchingSize(TestSuite $testSuite): void
 {
-	$testSuite->prepare();
+    $testSuite->prepare();
 
-	$actual = $testSuite->getTests();
+    $actual = $testSuite->getTests();
 
-	assert(1 === count($actual), 'Expected: 1. Actual: ' . count($actual));
+    assert(1 === count($actual), 'Expected: 1. Actual: ' . count($actual));
 }
 
 #[Test]
 function testTestSuite_GetFixture_WhenNameAndTypeProvided_ReturnsMatchingFunctionName(TestSuite $testSuite): void
 {
-	$testSuite->prepare();
+    $testSuite->prepare();
 
-	$actual = $testSuite->hasFixture('EasyTestTest\\TestSuite\\exampleFixture', 'int');
+    $actual = $testSuite->hasFixture('EasyTestTest\\TestSuite\\exampleFixture', 'int');
 
-	assert($actual);
+    assert($actual);
 }
 
 #[Fixture]
 function testSuite(): Generator
 {
-	yield new TestSuite([
-		'\\EasyTestTest\\TestSuite\\exampleTest', 
-		'\\EasyTestTest\\TestSuite\\exampleFixture',
-	]);
+    yield new TestSuite([
+    	'\\EasyTestTest\\TestSuite\\exampleTest', 
+    	'\\EasyTestTest\\TestSuite\\exampleFixture',
+    ]);
 }
 
 #[Test]
@@ -43,5 +43,5 @@ function exampleTest(int $exampleFixture): void {
 
 #[Fixture] 
 function exampleFixture(): int {
-	return 1;
+    return 1;
 }

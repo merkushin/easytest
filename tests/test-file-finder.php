@@ -8,22 +8,22 @@ use EasyTest\FileFinder;
 
 #[Fixture]
 function fileFinder(): FileFinder {
-	return new FileFinder();
+    return new FileFinder();
 }
 
 #[Test]
 function testFileFinder(FileFinder $fileFinder): void
 {
-	$dirname = dirname(__FILE__) . '/test-file-finder';
-	$expected = [
-		$dirname . '/1.php',
-		$dirname . '/2.php',
-	];
+    $dirname = dirname(__FILE__) . '/test-file-finder';
+    $expected = [
+        $dirname . '/1.php',
+        $dirname . '/2.php',
+    ];
 
-	$generator = $fileFinder->findIn($dirname);
-	$actual = iterator_to_array($generator);
-	sort($actual);
+    $generator = $fileFinder->findIn($dirname);
+    $actual = iterator_to_array($generator);
+    sort($actual);
 
-	assert($actual === $expected);
+    assert($actual === $expected);
 }
 
