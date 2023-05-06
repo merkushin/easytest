@@ -6,10 +6,10 @@ use EasyTest\Attribute\Fixture;
 use EasyTest\Attribute\Ignore;
 use EasyTest\Attribute\Setup;
 use EasyTest\Attribute\TearDown;
-use EasyTest\Attribute\Test;
+use EasyTest\Attribute\Test as TestAttribute;
+use Generator;
 
-
-class TestSuite {
+final class TestSuite implements TestSuiteInterface {
 
 	private array $functionNames;
 
@@ -47,18 +47,19 @@ class TestSuite {
 		}
 
 		foreach ($reflection->getAttributes() as $attr) {
-			$name = $attr->getName();
-			if ($name === Fixture::class) {
-				$this->fixtures[$reflection->getName()] = $reflection->getReturnType()->getName();
-			} elseif ($name === Test::class) {
-				$this->tests[] = [
-					'function' => $reflection->getName(),
-					'arguments' => $arguments,
-				];
-			} elseif ($name === Setup::class) {
-				$this->setups[] = $reflection->getName();
-			} elseif ($name === TearDown::class) {
-				$this->tearDowns[] = $reflection->getName();
+			switch ($attr->getName()) {
+				case Fixture::class:
+					$this->fixtures[$reflection->getName()] = $reflection->getReturnType()->getName();
+					break;
+				case TestAttribute::class:
+					$this->tests[] = new Test($this, $reflection->getName(), $arguments);
+					break;
+				case Setup::class:
+					$this->setups[] = $reflection->getName();
+					break;
+				case TearDown::class:
+					$this->tearDowns[] = $reflection->getName();
+					break;
 			}
 		}
 	}
@@ -68,7 +69,11 @@ class TestSuite {
 	}
 
 	public function hasFixture(string $fixtureName, string $fixtureType): bool {
-		return isset($this->fixtures[$fixtureName]) && $this->fixtures[$fixtureName] === $fixtureType;
+		if (!isset($this->fixtures[$fixtureName])) {
+			return false;
+		}
+
+		return $this->fixtures[$fixtureName] === $fixtureType || $this->fixtures[$fixtureName] === Generator::class;
 	}
 
 	public function getSetups(): array {

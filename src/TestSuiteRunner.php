@@ -4,7 +4,7 @@ namespace EasyTest;
 
 class TestSuiteRunner {
 
-	private TestSuite $testSuite;
+	private TestSuiteInterface $testSuite;
 
 	private int $passes = 0;
 
@@ -12,7 +12,7 @@ class TestSuiteRunner {
 
 	private array $errors = [];
 
-	public function __construct(TestSuite $testSuite) {
+	public function __construct(TestSuiteInterface $testSuite) {
 		$this->testSuite = $testSuite;
 	}
 
@@ -22,32 +22,8 @@ class TestSuiteRunner {
 		$this->errors = [];
 
 		foreach ($this->testSuite->getTests() as $test) {
-			$function = $test['function'];
-			$arguments = $test['arguments'];
-
-			$prepared_arguments = [];
-			foreach ($arguments as $name => $type) {
-				try {
-					if ($this->testSuite->hasFixture($name, $type)) {
-						$prepared_arguments[] = $name();
-					} else {
-						$this->errors[] = new \RuntimeException("Didn't find fixture for $name");
-						continue 2;
-					}
-				} catch (\Throwable $e) {
-					$this->errors[] = new \RuntimeException("Fixture for $name failed: " . $e->getMessage());
-					continue 2;
-				}
-			}
-
 			try {
-				foreach ($this->testSuite->getSetups() as $setupFunction) {
-					$setupFunction();
-				}
-				$function(...$prepared_arguments);
-				foreach ($this->testSuite->getTearDowns() as $teardownFunction) {
-					$teardownFunction();
-				}
+				$test->run();
 				$this->passes++;
 				yield '.';
 			} catch (\AssertionError $e) {

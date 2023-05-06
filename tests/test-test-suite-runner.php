@@ -3,9 +3,6 @@
 namespace EasyTestTest\TestSuiteRunner;
 
 use EasyTest\Attribute\Fixture;
-use EasyTest\Attribute\Ignore;
-use EasyTest\Attribute\Setup;
-use EasyTest\Attribute\TearDown;
 use EasyTest\Attribute\Test;
 use EasyTest\TestSuite;
 use EasyTest\TestSuiteRunner;
@@ -13,58 +10,58 @@ use EasyTest\TestSuiteRunner;
 #[Fixture]
 function runner(): TestSuiteRunner
 {
-	$testSuite = new TestSuite(['EasyTestTest\\TestSuiteRunner\\test_one', 'EasyTestTest\\TestSuiteRunner\\test_one']);
-	$testSuite->prepare();
+    $testSuite = new TestSuite(['EasyTestTest\\TestSuiteRunner\\test_one', 'EasyTestTest\\TestSuiteRunner\\test_one']);
+    $testSuite->prepare();
 
-	return new TestSuiteRunner($testSuite);
+    return new TestSuiteRunner($testSuite);
 }
 
 #[Test]
 function testTestSuiteRunner_Run_WhenCalled_YieldsResuts(TestSuiteRunner $runner): void {
-	$results = $runner->run();
-	
-	$actual = iterator_to_array($results);
-	$expected = ['.', '.'];
-	assert($actual === $expected);
+    $results = $runner->run();
+    
+    $actual = iterator_to_array($results);
+    $expected = ['.', '.'];
+    assert($actual === $expected);
 }
 
 #[Test]
 function testTestSuiteRunner_GetPasses_AfterRun_ReturnsPasses(TestSuiteRunner $runner): void {
-	$result = $runner->run();
-	iterator_to_array($result);
+    $result = $runner->run();
+    iterator_to_array($result);
 
-	$passes = $runner->getPasses();
+    $passes = $runner->getPasses();
 
-	assert($passes === 2, "$passes === 2");
+    assert($passes === 2, "$passes === 2");
 }
 
 #[Test]
 function testTestSuiteRunner_GetFailures_AfterRun_ReturnsEmptyArray(TestSuiteRunner $runner): void {
-	$result = $runner->run();
-	iterator_to_array($result);
+    $result = $runner->run();
+    iterator_to_array($result);
 
-	$failures = $runner->getFailures();
+    $failures = $runner->getFailures();
 
-	assert([] === $failures);
+    assert([] === $failures);
 }
 
 #[Test]
 function testTestSuiteRunner_GetErrors_AfterRun_ReturnsEmptyArray(TestSuiteRunner $runner): void {
-	$result = $runner->run();
-	iterator_to_array($result);
+    $result = $runner->run();
+    iterator_to_array($result);
 
-	$errors = $runner->getErrors();
+    $errors = $runner->getErrors();
 
-	assert([] === $errors);
+    assert([] === $errors);
 }
 
 #[Test]
 function test_one(): void {
-	assert(true);
+    assert(true);
 }
 
 #[Test]
 function test_two(): void {
-	assert(true);
+    assert(true);
 }
 
