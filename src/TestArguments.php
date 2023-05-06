@@ -31,7 +31,7 @@ class TestArguments {
 		return null;
 	}
 
-	public static function prepare(TestSuite $testSuite, array $arguments): self {
+	public static function prepare(TestSuiteInterface $testSuite, array $arguments): self {
 		$preparedArguments = [];
 		foreach ($arguments as $name => $type) {
 			try {
